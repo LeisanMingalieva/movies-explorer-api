@@ -1,5 +1,10 @@
+require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+
+const router = require('./routes/index');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -7,3 +12,8 @@ app.listen(PORT, () => {
   console.log('Сервер запущен!');
 });
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+// mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+
+app.use(bodyParser.json());
+app.use(helmet());
+app.use(router);
