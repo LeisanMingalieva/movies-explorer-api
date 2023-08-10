@@ -49,7 +49,7 @@ const createMovies = (req, res, next) => {
     });
 };
 
-const deleteMovie = (req, res, next) => {
+const deleteMovies = (req, res, next) => {
   const { id } = req.params;
   Movie.findByIdAndDelete(id)
     .then((movie) => {
@@ -71,4 +71,4 @@ const deleteMovie = (req, res, next) => {
     });
 };
 
-module.exports = { getMovies, createMovies, deleteMovie };
+module.exports = { getMovies, createMovies, deleteMovies };
