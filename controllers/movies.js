@@ -4,13 +4,12 @@ const ForbiddenError = require('../helpers/errors/ForbidddenError');
 const BadRequestError = require('../helpers/errors/BadRequestError');
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
 
 const createMovies = (req, res, next) => {
-  const { _id } = req.user;
   const {
     country,
     director,
@@ -37,7 +36,7 @@ const createMovies = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
-    owner: _id,
+    owner: req.user._id,
   })
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
@@ -50,13 +49,12 @@ const createMovies = (req, res, next) => {
 };
 
 const deleteMovies = (req, res, next) => {
-  const { id } = req.params;
-  Movie.findByIdAndDelete(id)
+  Movie.findByIdAndDelete(req.params.id)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Такого фильм не найден в базе');
       }
-      if (req.user.id._id === movie.owner.toString()) {
+      if (req.user._id === movie.owner.toString()) {
         return movie.deleteOne();
       }
       throw new ForbiddenError('Вы не можете удалить фильм');
