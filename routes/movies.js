@@ -6,10 +6,10 @@ const {
   deleteMovies,
 } = require('../controllers/movies');
 
-// const { cardIdValidation, cardValidation } = require('../middlewares/validation');
+const { movieIdValidation, movieValidation } = require('../middlewares/validation');
 
 router.get('/', getMovies);
-router.post('/', createMovies);
-router.delete('/:id', deleteMovies);
+router.post('/', movieIdValidation, createMovies);
+router.delete('/:movieId', movieValidation, deleteMovies);
 
 module.exports = router;

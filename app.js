@@ -17,7 +17,6 @@ app.listen(PORT, () => {
   console.log('Сервер запущен!');
 });
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
-// mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 app.use(cors());
 app.use(bodyParser.json());
