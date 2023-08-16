@@ -51,7 +51,7 @@ const createMovies = (req, res, next) => {
 const deleteMovies = (req, res, next) => {
   Movie.findByIdAndDelete(req.params.movieId)
     .then((movie) => {
-      if (!movie) throw new NotFoundError('Такого фильм не найден в базе');
+      if (!movie) throw new NotFoundError('Такой фильм не найден в базе');
       if (req.user.id._id === movie.owner.toString()) {
         return movie.deleteOne();
       }
